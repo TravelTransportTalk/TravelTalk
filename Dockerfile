@@ -11,8 +11,10 @@ ENTRYPOINT [\
 ]
 
 ADD --chown=runner ./requirements.txt /app/requirements.txt
+ADD --chown=runner ./pyproject.toml /app/pyproject.toml
 RUN python -m venv /env &&\
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install --no-cache-dir -r /app/requirements.txt &&\
+    pip install -e /app
 
 CMD [\
     "--browser.gatherUsageStats=false" \
