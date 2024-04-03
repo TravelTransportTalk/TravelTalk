@@ -17,7 +17,7 @@ hide_pages(["Просмотр заявки"])
 trip = None
 st.title("Вы на шаг ближе к тому, чтобы найти себе приятного собеседника!")
 
-TELEGRAM_ID_KEY_NAME = "tgID"
+TELEGRAM_ID_KEY_NAME = "tg_id"
 passed_params = st.query_params
 default_tgId = None
 if TELEGRAM_ID_KEY_NAME in passed_params.keys():
