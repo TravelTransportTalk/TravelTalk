@@ -101,7 +101,7 @@ if chosen_transport_type is not None:
                         date_object = datetime.strptime(trip.date, "%Y-%m-%dT%H:%M:%S.%f%z")
                         st.write(date_object.strftime("%Y-%m-%d"))
                     with tr_author:
-                        if st.button(trip.authorId.tgUsername):
+                        if st.button(trip.authorId.tgUsername, key=trip.id):
                             st.session_state[SPECIFIC_USER_ID_KEY_NAME] = trip.authorId
                             st.switch_page("pages/specific_trip.py")
                     with tr_code:
