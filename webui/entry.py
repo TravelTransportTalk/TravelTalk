@@ -15,7 +15,7 @@ show_pages(
         Page(PAGE_SPECIFIC_TRIP, "Просмотр заявки", "📃"),
     ]
 )
-hide_pages([PAGE_SPECIFIC_TRIP])
+hide_pages(["Просмотр заявки"])
 
 title_alignment="""
 <style>
