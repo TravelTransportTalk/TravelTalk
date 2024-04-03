@@ -1,8 +1,9 @@
+import uuid
 from typing import List
 from enum import Enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 from datetime import datetime
-from uuid import uuid5
 
 
 class TransportType(Enum):
@@ -36,22 +37,76 @@ def path_type_get_readable_view(type: PathType) -> str:
             formatted = "Указать пункты ОТПРАВЛЕНИЯ и ПРИБЫТИЯ"
     return formatted
 
-@dataclass
-class Trip:
-    uuid: int
-    from_location: int
-    to_location: int
-    date: datetime
-    time: str
-    transport_type: TransportType
-    code: str
-    author_id: uuid5
+def get_available_locations() -> List[str]:
+    # TODO: call backend
+    return ["Москва", "Санкт-Петербург", "Пермь", "Когалым",
+            "Сочи", "Калининград", "Сургут", "Тюмень"
+            "Стамбул", "Тбилиси", "Ереван", "Баку", "Рига",
+            "Екатеринбург", "Нижний Новгород", "Уфа", "Новосибирск",
+            "Омск", "Челябинск"]
 
 
+@dataclass_json
 @dataclass
 class User:
-    id: int
+    id: uuid.UUID
     nick: str
-    full_name: str
+    fullName: str
     description: str
-    tg_username: str
+    tgId: int
+    tgUsername: str
+
+@dataclass_json
+@dataclass
+class AuthUserRequest:
+    tgId: int
+
+@dataclass_json
+@dataclass
+class UserControllerResp:
+    message: str
+    user: User
+
+@dataclass_json
+@dataclass
+class AddTripRequest:
+    fromId: uuid.UUID
+    toId: uuid.UUID
+    date: str
+    time: str
+    code: str
+    transportId: uuid.UUID
+    authorId: uuid.UUID
+
+@dataclass_json
+@dataclass
+class Location:
+    id: uuid.UUID
+    name: str
+
+@dataclass_json
+@dataclass
+class Transport:
+    id: uuid.UUID
+    name: str
+
+@dataclass_json
+@dataclass
+class Trip:
+    id: uuid.UUID
+    from_location: Location = field(metadata=config(field_name="from"))
+    to_location: Location = field(metadata=config(field_name="to"))
+    date: datetime
+    time: datetime
+    code: str
+    transport: Transport
+    authorId: User
+
+@dataclass_json
+@dataclass
+class StationShort:
+    station_code: str
+    transport_type: str
+    short_name: str
+    long_name: str
+    to_location: Location = field(metadata=config(field_name="to"))
