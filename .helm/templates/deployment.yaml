@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: travel-talk-ui
+  template:
+    metadata:
+      labels:
+        app: travel-talk-ui
+    spec:
+      containers:
+      - name: streamlit
+        image: {{ .Values.image }}
+        ports:
+          - containerPort: 8501
+            name: http
+        env:
+          - name: API_URL
+            value: "/tt"

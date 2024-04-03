@@ -1,0 +1,72 @@
+---
+name: Build container image and update cluster deployment
+on:
+  push:
+    branches:
+      - master
+      - ci-setup
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.push.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GitHub Slug Action
+        uses: rlespinasse/github-slug-action@v4.4.1
+
+      - name: login
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: build
+        run: |
+          export IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY_OWNER_PART_SLUG}/${GITHUB_REPOSITORY_NAME_PART_SLUG}:${GITHUB_REF_SLUG}_${GITHUB_SHA:0:6}"
+          docker build -t "$IMAGE_NAME" --label "runid=${GITHUB_RUN_ID}" .
+
+      - name: push
+        id: push
+        run: |
+          export IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY_OWNER_PART_SLUG}/${GITHUB_REPOSITORY_NAME_PART_SLUG}:${GITHUB_REF_SLUG}_${GITHUB_SHA:0:6}"
+          export IMAGE_NAME_LATEST="ghcr.io/${GITHUB_REPOSITORY_OWNER_PART_SLUG}/${GITHUB_REPOSITORY_NAME_PART_SLUG}:latest"
+
+          docker tag "$IMAGE_NAME" "$IMAGE_NAME_LATEST"
+
+          docker push "$IMAGE_NAME"
+          docker push "$IMAGE_NAME_LATEST"
+
+          echo "image=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: "Deploy to kubernetes"
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install keystone-auth
+        run: |
+          curl -sSL https://hub.mcs.mail.ru/repository/client-keystone-auth/latest/linux/client-install.sh | bash
+
+      - name: Install werf
+        uses: werf/actions/install@v1.2
+
+      - name: "Deploy"
+        run: |
+          . $(werf ci-env github --as-file)
+          cd .helm
+
+          export PATH=$HOME/vk-cloud-solutions/bin:$PATH
+
+          werf helm dependency update
+          werf helm upgrade \
+            --install \
+            -n travel-talk-dev \
+            --atomic \
+            -f values.yaml \
+            --timeout=15m0s \
+            --set image="$IMAGE" \
+            register-bot .
+        env:
+          WERF_KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG_BASE64 }}
+          IMAGE: ${{ needs.build.outputs.image }}
