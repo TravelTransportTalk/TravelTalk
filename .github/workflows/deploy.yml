@@ -66,7 +66,7 @@ jobs:
             -f values.yaml \
             --timeout=15m0s \
             --set image="$IMAGE" \
-            register-bot .
+            travel-talk-ui .
         env:
           WERF_KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG_BASE64 }}
           IMAGE: ${{ needs.build.outputs.image }}
