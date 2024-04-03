@@ -1,9 +1,9 @@
-#[theme]
-## https://colorhunt.co/palette/008dda41c9e2ace2e1f7eedd
-#backgroundColor="#F7EEDD"
-#primaryColor="#008DDA"
-#secondaryBackgroundColor="#ACE2E1"
-#textColor="#045480"
+[theme]
+# https://colorhunt.co/palette/008dda41c9e2ace2e1f7eedd
+backgroundColor="#F7EEDD"
+primaryColor="#008DDA"
+secondaryBackgroundColor="#ACE2E1"
+textColor="#045480"
 
 [client]
 toolbarMode = "minimal"
