@@ -165,6 +165,5 @@ vbuild==0.8.2
 watchdog==4.0.0
 watchfiles==0.21.0
 websockets==12.0
--e git+ssh://git@github.com/TravelTransportTalk/TravelTalk.git@5abe14836b4c789607aa6255df2218c3a596c602#egg=webui
 wsproto==1.2.0
 yarl==1.9.4
