@@ -9,8 +9,7 @@ import json
 
 from webui.common import *
 
-# BASE_URL = os.environ.get("BASE_URL")
-BASE_URL = "http://localhost:8080/tt/"
+BASE_URL = "https://travel-talk.mkls.space/tt/"
 
 # Helper method to handle UUID serialization.
 def uuid_to_str(obj):
