@@ -1,4 +1,4 @@
-# TravelTalk (Поедем поедим)
+# TravelTalk (Еду поболтать)
 Application for finding interlocutors in a trips by any kind of transport:
 * Railroads
 * Air flights
