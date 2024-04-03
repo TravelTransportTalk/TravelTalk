@@ -1,0 +1,15 @@
+---
+image: ghcr.io/traveltransporttalk/traveltalk:latest
+
+pgSecretName: postgres-secret
+
+ingress:
+  enabled: true
+  className: nginx
+  tls:
+    enabled: true
+    secretName: travel-talk-mkls-space
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - travel-talk.mkls.space
