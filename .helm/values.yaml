@@ -1,6 +1,6 @@
 ---
 image: ghcr.io/traveltransporttalk/traveltalk:latest
-apiBaseUrl: "https://travel-talk.mkls.space/tt"
+apiBaseUrl: "http://travel-talk-server-svc:8080/tt/"
 
 ingress:
   enabled: true
