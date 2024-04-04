@@ -1,5 +1,5 @@
 APP_NAME = "Еду поболтать"
-APP_SLOGAN = "Найти собседника в поездку — проще простого"
+APP_SLOGAN = "Найти собеседника в поездку — проще простого"
 
 # TODO: use constants instead of hardcoded values in Streamlit app.
 CREATE_TRIP = "Создать поездку"
