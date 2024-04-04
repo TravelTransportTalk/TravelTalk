@@ -19,5 +19,5 @@ spec:
           - containerPort: 8501
             name: http
         env:
-          - name: API_URL
-            value: "/tt"
+          - name: API_BASE_URL
+            value: "{{ .Values.apiBaseUrl }}"

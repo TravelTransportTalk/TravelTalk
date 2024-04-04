@@ -10,7 +10,7 @@ import json
 
 from webui.common import *
 
-BASE_URL = "https://travel-talk.mkls.space/tt/"
+BASE_URL = os.getenv('API_BASE_URL')
 
 # Helper method to handle UUID serialization.
 def uuid_to_str(obj):

@@ -1,7 +1,6 @@
 ---
 image: ghcr.io/traveltransporttalk/traveltalk:latest
-
-pgSecretName: postgres-secret
+apiBaseUrl: "https://travel-talk.mkls.space/tt"
 
 ingress:
   enabled: true
