@@ -9,7 +9,7 @@ st.set_page_config(
 
 show_pages(
     [
-        Page(PAGE_MAIN, "Главная", "🏠"),
+        Page(PAGE_MAIN, "Главная", "🏠", is_section=True),
         Page(PAGE_EXISTING_TRIPS, "Найти собеседника", "🙏"),
         Page(PAGE_CREATE_NEW_TRIP, "Создать поездку", "🌏"),
         Page(PAGE_SPECIFIC_TRIP, "Просмотр заявки", "📃"),
