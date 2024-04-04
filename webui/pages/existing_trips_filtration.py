@@ -73,6 +73,8 @@ if chosen_transport_type is not None:
         find_transport_request.fromId = point_from.id
     if point_to is not None:
         find_transport_request.toId = point_to.id
+    if chosen_date is not None:
+        find_transport_request.date = chosen_date.strftime("%d-%m-%Y")
     found_trip_response = find_trips(find_transport_request)
     found_trips = found_trip_response.trips
     if found_trips is not None:

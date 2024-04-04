@@ -2,6 +2,7 @@ import dataclasses
 import os
 from typing import Dict, Optional
 from uuid import uuid4
+import streamlit as st
 
 import requests
 
@@ -65,6 +66,7 @@ def get_all_stations() -> List[StationShort]:
         return None
 
 
+@st.cache_data
 def get_stations_by_type(transport_type: TransportType) -> List[StationShort]:
     api_transport_type_name = transport_type_get_api_view(transport_type)
     url = f"{BASE_URL}stations/{api_transport_type_name}"
